@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://mynet.com/schemas/user2.json#",
+  "title": "User",
+  "description": "User profile with connections",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "positive integer or string of digits",
+      "type": ["string", "integer"],
+      "pattern": "^[1-9][0-9]*$",
+      "minimum": 1
+    },
+    "name": { "type": "string", "maxLength": 128 },
+    "email": { "type": "string", "format": "email" },
+    "phone": { "type": "string", "pattern": "^[0-9()\\-\\.\\s]+$" }, 
+    "address": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "maxProperties": 6,
+      "required": ["street", "postcode", "city", "country"]
+    },
+    "personal": {
+      "type": "object",
+      "properties": {
+        "DOB": { "type": "string", "format": "date" },
+        "age": { "type": "integer", "minimum": 13 },
+        "gender": { "enum": ["female", "male"] }
+      },
+      "required": ["DOB", "age"],
+      "additionalProperties": false
+    },
+    "feeds": {
+      "title": "feeds",
+      "description": "Feeds user subscribes to",
+      "type": "object",
+      "patternProperties": {
+        "^[A-Za-z]+$": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "createdAt": { "type": "string", "format": "date-time" }
+  }
+}
